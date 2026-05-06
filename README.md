@@ -67,11 +67,12 @@ Cognitive-TCC/
 
 ---
 
-# 📷 Screenshots
+## 📱 Screenshots
 
-| Dashboard | Relatório | Diário |
-|---|---|---|
-| Screenshot | Screenshot | Screenshot |
+| Tela Inicial (Psicólogo) | Relatório de Evolução | Diário do Paciente |
+|:---:|:---:|:---:|
+| <img src="screenshots/home_psicologo.png" width="200"> | <img src="screenshots/grafico_atividades.png" width="200"> | <img src="screenshots/diario_paciente.png" width="200">
+
 
 ---
 
