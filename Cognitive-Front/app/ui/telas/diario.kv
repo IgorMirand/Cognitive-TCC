@@ -1,0 +1,130 @@
+#:import hex kivy.utils.get_color_from_hex
+
+# --- Componente Customizado para o Card do Diário (KivyMD 2.0 M3) ---
+<DiarioCard@MDCard>:
+    style: "elevated" # Estilo padrão do M3
+    orientation: "vertical"
+    size_hint_y: None
+    height: self.minimum_height
+    padding: "16dp"
+    spacing: "10dp"
+    radius: [20]
+    md_bg_color: 1, 1, 1, 1
+    ripple_behavior: True
+    
+    # --- Cabeçalho do Card: Data e Sentimento ---
+    MDBoxLayout:
+        adaptive_height: True
+        spacing: "10dp"
+
+        MDIcon:
+            id: icon_sentimento
+            icon: "emoticon-outline"
+            theme_text_color: "Custom"
+            text_color: hex("#92C7A3")
+            pos_hint: {"center_y": .5}
+
+        MDLabel:
+            id: lbl_sentimento
+            text: "Sentimento"
+            bold: True
+            # MUDANÇA AQUI: Subtitle1 -> Title Medium
+            font_style: "Title"
+            role: "medium"
+            theme_text_color: "Primary"
+            size_hint_x: 0.6
+
+        MDLabel:
+            id: lbl_data
+            text: "00/00/0000"
+            halign: "right"
+            # MUDANÇA AQUI: Caption -> Label Medium
+            font_style: "Label"
+            role: "medium"
+            theme_text_color: "Hint"
+            pos_hint: {"center_y": .5}
+
+    MDDivider:
+
+    # --- Conteúdo: Atividades ---
+    MDBoxLayout:
+        adaptive_height: True
+        orientation: "vertical"
+        spacing: "4dp"
+
+        MDLabel:
+            text: "Atividades:"
+            font_style: "Label"
+            role: "small"
+            theme_text_color: "Secondary"
+        
+        MDLabel:
+            id: lbl_atividades
+            text: "Nenhuma atividade"
+            font_style: "Body"
+            role: "medium"
+            adaptive_height: True
+
+    # --- Conteúdo: Anotação ---
+    MDBoxLayout:
+        adaptive_height: True
+        orientation: "vertical"
+        spacing: "4dp"
+
+        MDLabel:
+            text: "Reflexão do dia:"
+            font_style: "Label"
+            role: "small"
+            theme_text_color: "Secondary"
+
+        MDLabel:
+            id: lbl_anotacao
+            text: "..."
+            font_style: "Body"
+            role: "medium"
+            adaptive_height: True
+            markup: True
+
+<DiarioScreen>:
+    name: "diario"
+    
+    MDFloatLayout:
+        md_bg_color: hex("#F5F7F6")
+
+        # --- 1. Cabeçalho ---
+        MDBoxLayout:
+            orientation: "horizontal"
+            adaptive_height: True
+            padding: "16dp"
+            spacing: "12dp"
+            pos_hint: {"top": 1}
+            md_bg_color: hex("#92C7A3")
+            radius: [0, 0, 0, 30]
+            elevation: 2
+
+            MDIconButton:
+                icon: "arrow-left"
+                style: "standard" # M3 Standard
+                theme_icon_color: "Custom"
+                icon_color: 1, 1, 1, 1
+                pos_hint: {"center_y": .5}
+                on_release: app.root.current = "home"
+
+            MDLabel:
+                text: "Meu Histórico"
+                font_style: "Title"
+                role: "large"
+                theme_text_color: "Custom"
+                text_color: 1, 1, 1, 1
+                pos_hint: {"center_y": .5}
+
+        # --- 2. Lista de Entradas ---
+        MDScrollView:
+            pos_hint: {"top": .88, "bottom": .12}
+            do_scroll_x: False
+            bar_width: 0 
+            
+            MDList:
+                id: tabela_container
+                padding: "20dp"
+                spacing: "16dp" 

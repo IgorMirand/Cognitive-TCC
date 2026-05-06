@@ -1,0 +1,27 @@
+# Arquivos gerados automaticamente pelo Python
+__pycache__/
+*.pyc
+*.pyd
+
+# Ambientes virtuais
+venv/
+.venv/
+
+# Arquivos de configurações de IDEs
+.vscode/
+.idea/
+
+# Pacotes de distribuição
+dist/
+build/
+*.egg-info/
+
+# Arquivos de log
+*.log
+
+# Arquivos de dados confidenciais ou de ambiente
+.env
+sendgrid.env 
+
+# Bibliotecas locais (pesadas)
+KivyMD/

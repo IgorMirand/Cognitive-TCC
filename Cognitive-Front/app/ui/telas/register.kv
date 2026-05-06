@@ -1,0 +1,236 @@
+#:import hex kivy.utils.get_color_from_hex
+
+<RegisterScreen>:
+    name: "register"
+
+    MDFloatLayout:
+        md_bg_color: hex("#F5F7F6")
+
+        # --- HEADER SUAVE ---
+        MDBoxLayout:
+            orientation: "horizontal"
+            adaptive_height: True
+            padding: "16dp"
+            spacing: "12dp"
+            pos_hint: {"top": 1}
+            md_bg_color: hex("#92C7A3")
+            radius: [0, 0, 30, 30] # Arredondamento generoso embaixo
+            # Sem elevation (sombra) para ficar mais leve
+            z_index: 10
+
+            MDIconButton:
+                icon: "arrow-left"
+                style: "standard"
+                theme_icon_color: "Custom"
+                icon_color: 1, 1, 1, 1
+                pos_hint: {"center_y": .5}
+                on_release: app.root.current = "main"
+
+            MDLabel:
+                text: "Criar Conta"
+                font_style: "Title"
+                role: "large"
+                theme_text_color: "Custom"
+                text_color: 1, 1, 1, 1
+                bold: True
+                pos_hint: {"center_y": .5}
+
+        # --- CONTEÚDO ---
+        MDScrollView:
+            pos_hint: {"center_x": .5}
+            size_hint_y: None
+            height: root.height - dp(80)
+            y: 0
+            always_overscroll: False
+
+            MDBoxLayout:
+                orientation: 'vertical'
+                adaptive_height: True
+                padding: "20dp"
+                spacing: "10dp"
+                pos_hint: {'center_x': .5}
+
+                # --- ÁREA BRANCA (Sem sombra forte, apenas um fundo limpo) ---
+                MDBoxLayout:
+                    orientation: "vertical"
+                    adaptive_height: True
+                    padding: "24dp"
+                    spacing: "18dp" # Espaço relaxado entre itens
+                    md_bg_color: 1, 1, 1, 1
+                    radius: [30, 30, 30, 30] # Bordas bem redondas
+                    
+                    # Ícone
+                    Image:
+                        source: "app/assets/img.png"
+                        size_hint: None, None
+                        size: "70dp", "70dp"
+                        pos_hint: {"center_x": .5}
+                        opacity: 0.9 # Leve transparência para suavizar a imagem
+
+                    MDLabel:
+                        text: "Seja bem-vindo"
+                        font_style: "Headline"
+                        role: "small"
+                        halign: 'center'
+                        bold: True
+                        adaptive_height: True
+                        theme_text_color: "Custom"
+                        text_color: hex("#666666") # Cinza escuro em vez de preto (menos agressivo)
+
+                    # --- CAMPOS ARREDONDADOS (Estilo Pílula) ---
+                    MDTextField:
+                        id: username
+                        mode: "outlined"
+                        radius: [25, 25, 25, 25] # <--- O segredo da suavidade
+                        
+                        theme_line_color: "Custom"
+                        line_color_normal: hex("#EEEEEE") # Borda quase invisível
+                        line_color_focus: hex("#92C7A3")
+                        
+                        MDTextFieldHintText:
+                            text: "Nome de usuário"
+                            text_color_normal: hex("#AAAAAA") # Texto cinza claro
+                        
+                        MDTextFieldLeadingIcon:
+                            icon: "account-outline"
+                            theme_icon_color: "Custom"
+                            icon_color_normal: hex("#AAAAAA")
+                            icon_color_focus: hex("#92C7A3")
+
+                    MDTextField:
+                        id: email_input
+                        mode: "outlined"
+                        radius: [25, 25, 25, 25]
+                        theme_line_color: "Custom"
+                        line_color_normal: hex("#EEEEEE")
+                        line_color_focus: hex("#92C7A3")
+                        
+                        MDTextFieldHintText:
+                            text: "E-mail"
+                        MDTextFieldLeadingIcon:
+                            icon: "email-outline"
+                            theme_icon_color: "Custom"
+                            icon_color_normal: hex("#AAAAAA")
+                            icon_color_focus: hex("#92C7A3")
+                        MDTextFieldHelperText:
+                            text: "E-mail inválido"
+                            mode: "on_error"
+
+                    MDTextField:
+                        id: password
+                        mode: "outlined"
+                        password: True
+                        radius: [25, 25, 25, 25]
+                        theme_line_color: "Custom"
+                        line_color_normal: hex("#EEEEEE")
+                        line_color_focus: hex("#92C7A3")
+                        
+                        MDTextFieldHintText:
+                            text: "Senha"
+                        MDTextFieldLeadingIcon:
+                            icon: "lock-outline"
+                            theme_icon_color: "Custom"
+                            icon_color_normal: hex("#AAAAAA")
+                            icon_color_focus: hex("#92C7A3")
+
+                    # Botão Mostrar Senha (Texto simples e discreto)
+                    MDButton:
+                        style: "text"
+                        height: "30dp"
+                        pos_hint: {"right": 1}
+                        on_release: root.toggle_password_visibility()
+                        MDButtonText:
+                            text: "Mostrar Senha"
+                            theme_text_color: "Custom"
+                            text_color: hex("#92C7A3")
+                            font_style: "Label"
+                            role: "medium"
+
+                    MDTextField:
+                        id: data_nacimento
+                        mode: "outlined"
+                        readonly: True 
+                        radius: [25, 25, 25, 25]
+                        theme_line_color: "Custom"
+                        line_color_normal: hex("#EEEEEE")
+                        line_color_focus: hex("#92C7A3")
+                        on_focus: if self.focus: root.show_modal_date_picker()
+                        
+                        MDTextFieldHintText:
+                            text: "Data de Nascimento"
+                        MDTextFieldLeadingIcon:
+                            icon: "calendar-outline"
+                            theme_icon_color: "Custom"
+                            icon_color_normal: hex("#AAAAAA")
+                            icon_color_focus: hex("#92C7A3")
+
+                    MDTextField:
+                        id: tipo_usuario
+                        mode: "outlined"
+                        readonly: True
+                        radius: [25, 25, 25, 25]
+                        theme_line_color: "Custom"
+                        line_color_normal: hex("#EEEEEE")
+                        line_color_focus: hex("#92C7A3")
+                        on_focus: if self.focus: root.open_menu_tipo()
+                        
+                        MDTextFieldHintText:
+                            text: "Tipo de Usuário"
+                        MDTextFieldLeadingIcon:
+                            icon: "account-question-outline"
+                            theme_icon_color: "Custom"
+                            icon_color_normal: hex("#AAAAAA")
+                            icon_color_focus: hex("#92C7A3")
+                        MDTextFieldTrailingIcon:
+                            icon: "menu-down"
+
+                    # Container Código (Mantido, mas sem bordas duras)
+                    MDBoxLayout:
+                        id: container_codigo
+                        orientation: "vertical"
+                        adaptive_height: True
+                        size_hint_y: None
+                        height: "0dp" if codigo_acesso.disabled else "80dp"
+                        opacity: 0 if codigo_acesso.disabled else 1
+                        
+                        MDTextField:
+                            id: codigo_acesso
+                            mode: "outlined"
+                            disabled: True
+                            radius: [25, 25, 25, 25]
+                            theme_line_color: "Custom"
+                            line_color_focus: hex("#92C7A3")
+                            MDTextFieldHintText:
+                                text: "Código de Acesso"
+                            MDTextFieldLeadingIcon:
+                                icon: "key-variant"
+
+                    # --- BOTÃO PRINCIPAL SUAVE ---
+                    MDButton:
+                        style: "filled"
+                        theme_width: "Custom"
+                        size_hint_x: 1
+                        height: "50dp"
+                        theme_bg_color: "Custom"
+                        md_bg_color: hex("#92C7A3")
+                        radius: [25, 25, 25, 25] # Botão totalmente redondo (Pílula)
+                        on_release: root.do_register()
+                        
+                        MDButtonText:
+                            text: "Criar Cadastro"
+                            pos_hint: {"center_x": .5, "center_y": .5}
+                            text_color: 1, 1, 1, 1
+                            font_style: "Title"
+                            role: "medium"
+                            bold: True
+
+                # --- BOTÃO VOLTAR (Rodapé) ---
+                MDButton:
+                    style: "text"
+                    pos_hint: {"center_x": .5}
+                    on_release: app.root.current = "login"
+                    MDButtonText:
+                        text: "Já tenho uma conta"
+                        theme_text_color: "Custom"
+                        text_color: hex("#757575")
+                        

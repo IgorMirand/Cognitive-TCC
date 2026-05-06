@@ -1,0 +1,563 @@
+#:import hex kivy.utils.get_color_from_hex
+#:import dp kivy.metrics.dp
+
+# --- Componente de Cartão do Dashboard ---
+<PsychoCard@MDCard>:
+    orientation: "horizontal"
+    size_hint_y: None
+    height: "100dp"
+    padding: "16dp"
+    spacing: "16dp"
+    radius: [16]
+    theme_bg_color: "Custom"
+    md_bg_color: hex("#FFFFFF")
+    elevation: 1
+    ripple_behavior: True
+    
+    # Propriedades para passar dados
+    icon: "circle"
+    title: ""
+    subtitle: ""
+    
+    MDIcon:
+        icon: root.icon
+        theme_text_color: "Custom"
+        text_color: hex("#92C7A3")
+        font_size: "40sp"
+        pos_hint: {"center_y": .5}
+        
+    MDBoxLayout:
+        orientation: "vertical"
+        adaptive_height: True
+        pos_hint: {"center_y": .5}
+        
+        MDLabel:
+            text: root.title
+            font_style: "Title"
+            role: "medium"
+            adaptive_height: True
+            
+        MDLabel:
+            text: root.subtitle
+            font_style: "Body"
+            role: "medium"
+            theme_text_color: "Secondary"
+            adaptive_height: True
+
+# --- Tela Principal do Psicólogo ---
+<PsychoHomeScreen>:
+    name: "home_psicologo"
+    
+    MDNavigationLayout:
+        
+        MDScreenManager:
+            
+            MDScreen:
+                md_bg_color: hex("#F5F7F6") # Fundo Off-white moderno
+
+                # --- Cabeçalho (Header) ---
+                MDBoxLayout:
+                    orientation: "horizontal"
+                    adaptive_height: True
+                    padding: "16dp"
+                    spacing: "12dp"
+                    pos_hint: {"top": 1}
+                    md_bg_color: hex("#92C7A3")
+                    radius: [0, 0, 0, 30] # Curva estilosa
+
+                    Image:
+                        source: "app/assets/img.png"
+                        size_hint: None, None
+                        size: "50dp", "50dp"
+                        allow_stretch: True
+
+                    MDBoxLayout:
+                        orientation: "vertical"
+                        adaptive_height: True
+                        pos_hint: {"center_y": .5}
+
+                        MDLabel:
+                            id: id_label
+                            text: "Bem-vindo, Dr(a)."
+                            font_style: "Title"
+                            role: "medium"
+                            theme_text_color: "Custom"
+                            text_color: 1, 1, 1, 1
+                            adaptive_height: True
+
+                        MDLabel:
+                            text: "Painel de Controle"
+                            font_style: "Label"
+                            role: "large"
+                            theme_text_color: "Custom"
+                            text_color: 1, 1, 1, 0.8
+                            adaptive_height: True
+
+
+                # --- Conteúdo (Dashboard) ---
+                MDScrollView:
+                    pos_hint: {"top": .85}
+                    do_scroll_x: False
+                    
+                    MDBoxLayout:
+                        orientation: "vertical"
+                        adaptive_height: True
+                        padding: "24dp"
+                        spacing: "20dp"
+
+                        MDLabel:
+                            text: "Visão Geral"
+                            font_style: "Title"
+                            role: "medium"
+                            adaptive_height: True
+                            theme_text_color: "Secondary"
+
+                        
+                        PsychoCard:
+                            icon: "calendar-edit"
+                            title: "Minha Agenda"
+                            subtitle: "Definir horários livres"
+                            on_release: app.root.current = "disponibilidade"
+
+                        # Card 2: Meus Pacientes
+                        PsychoCard:
+                            icon: "account-group"
+                            title: "Meus Pacientes"
+                            subtitle: "Gerenciar lista ativa"
+                            id: patient_summary_card
+                            on_release: root.navigate_to("pacientes")
+
+                        # Card 3: Ação Rápida (Enviar Convite)
+                        PsychoCard:
+                            icon: "email-plus-outline"
+                            title: "Convidar Paciente"
+                            subtitle: "Enviar código de acesso"
+                            on_release: root.show_email_dialog()                        
+
+                        PsychoCard:
+                            icon: "plus"
+                            title: "Relatório"
+                            subtitle: "Fazer anotações sobre a consulta"
+                            on_release: app.root.current= "consulta_anotacao"
+
+                MDNavigationBar:
+                    #on_switch_tabs: app.root.current = "conta"
+                    MDNavigationItem:
+                        name: "home"
+                        MDNavigationItemIcon:
+                            icon: "home"
+                        MDNavigationItemLabel:
+                            text: "Home"
+
+                    MDNavigationItem:
+                        name: "conta"
+                        on_release: app.root.current= "conta"
+                        MDNavigationItemIcon:
+                            icon: "account"
+                        MDNavigationItemLabel:
+                            text: "Conta"
+
+
+# --- Tela de Lista de Pacientes ---
+<PatientListScreen>:
+    name: "pacientes"
+    
+    MDScreen:
+        md_bg_color: hex("#F5F7F6")
+
+        # --- Cabeçalho Personalizado ---
+        MDBoxLayout:
+            orientation: "horizontal"
+            adaptive_height: True
+            padding: "16dp"
+            spacing: "12dp"
+            pos_hint: {"top": 1}
+            md_bg_color: hex("#92C7A3")
+            elevation: 2
+
+            # Botão Voltar
+            MDIconButton:
+                icon: "arrow-left"
+                theme_icon_color: "Custom"
+                icon_color: 1, 1, 1, 1
+                pos_hint: {"center_y": .5}
+                on_release: app.root.current = "home_psicologo"
+
+            MDLabel:
+                text: "Gerenciar Pacientes"
+                font_style: "Title"
+                role: "large"
+                theme_text_color: "Custom"
+                text_color: 1, 1, 1, 1
+                pos_hint: {"center_y": .5}
+
+            Widget: # Espaçador
+
+        # --- Lista de Pacientes ---
+        MDScrollView:
+            pos_hint: {"top": .88}
+            
+            MDList:  # <--- TEM QUE SER MDList
+                id: patient_list_container
+                padding: "20dp"
+                spacing: "12dp"
+            
+
+#:import hex kivy.utils.get_color_from_hex
+
+# --- Componente de Item da Lista (Texto + Ícone Lixeira) ---
+<ActivityListItem>:
+    type: "small" # ou "large"
+    size_hint_y: None
+    height: "60dp"
+    theme_bg_color: "Custom"
+    md_bg_color: 1, 1, 1, 1
+    radius: [10]
+    ripple_effect: True
+    
+    # Evento de clique no corpo do item (EDITAR)
+    on_release: root.on_edit()
+
+    MDListItemHeadlineText:
+        text: root.text
+        theme_text_color: "Primary"
+        pos_hint: {"center_y": .5}
+
+    
+    MDIconButton:
+        icon: "trash-can-outline"
+        style: "standard"
+        theme_icon_color: "Custom"
+        icon_color: 1, 0, 0, 1 # Vermelho
+        pos_hint: {"center_y": .5}
+        # Agora sim o evento funciona
+        on_release: root.on_delete()
+
+# --- Tela Principal ---
+<ListAtividadeScreen>:
+    name: "lista_atividade"
+
+    MDFloatLayout:
+        md_bg_color: hex("#F5F7F6")
+
+        # --- 1. Cabeçalho (Header) Corrigido ---
+        MDBoxLayout:
+            orientation: "horizontal"
+            adaptive_height: True
+            padding: "16dp"
+            spacing: "12dp"
+            pos_hint: {"top": 1}
+            md_bg_color: hex("#92C7A3")
+            radius: [0, 0, 0, 20]
+            elevation: 2
+
+            MDIconButton:
+                icon: "arrow-left"
+                theme_icon_color: "Custom"
+                icon_color: 1, 1, 1, 1
+                pos_hint: {"center_y": .5}
+                on_release: app.root.current = "home_psicologo"
+            
+            MDLabel:
+                text: "Gerenciar Atividades"
+                font_style: "Title"
+                role: "large"
+                theme_text_color: "Custom"
+                text_color: 1, 1, 1, 1
+                pos_hint: {"center_y": .5}
+
+        # --- 2. Conteúdo Principal ---
+        MDCard:
+            orientation: "vertical"
+            size_hint: .9, .75
+            pos_hint: {"center_x": .5, "center_y": .5}
+            radius: [20]
+            padding: "16dp"
+            spacing: "10dp"
+            md_bg_color: hex("#FFFFFF")
+            elevation: 1
+
+            MDLabel:
+                text: "Atividades Cadastradas"
+                halign: "center"
+                font_style: "Title"
+                role: "medium"
+                theme_text_color: "Secondary"
+                adaptive_height: True
+
+            MDDivider:
+
+            # Lista de Itens
+            MDScrollView:
+                do_scroll_x: False
+                MDList:
+                    id: lista_selecao_atividades
+                    spacing: "10dp"
+                    padding: "5dp"
+
+        # --- 3. Botão Flutuante (ADICIONAR NOVA) ---
+        MDFabButton:
+            icon: "plus"
+            style: "standard"
+            theme_bg_color: "Custom"
+            md_bg_color: hex("#92C7A3")
+            theme_icon_color: "Custom"
+            icon_color: 1, 1, 1, 1
+            pos_hint: {"right": .95, "bottom": .05}
+            on_release: root.show_add_dialog()
+
+<DisponibilidadeScreen>:
+    name: "disponibilidade"
+    
+    MDFloatLayout:
+        md_bg_color: hex("#F5F7F6")
+
+        # --- Cabeçalho ---
+        MDBoxLayout:
+            orientation: "horizontal"
+            adaptive_height: True
+            padding: "16dp"
+            spacing: "12dp"
+            pos_hint: {"top": 1}
+            md_bg_color: hex("#92C7A3")
+            radius: [0, 0, 0, 20]
+            elevation: 2
+            
+            MDIconButton:
+                icon: "arrow-left"
+                theme_icon_color: "Custom"
+                icon_color: 1, 1, 1, 1
+                pos_hint: {"center_y": .5}
+                on_release: app.root.current = "home_psicologo"
+            
+            MDLabel:
+                text: "Minha Agenda"
+                font_style: "Title"
+                role: "large"
+                theme_text_color: "Custom"
+                text_color: 1,1,1,1
+                pos_hint: {"center_y": .5}
+
+        # --- Conteúdo Separado em Duas Seções ---
+        MDScrollView:
+            pos_hint: {"top": .88, "bottom": .12} # Ajuste para caber o botão (+)
+            do_scroll_x: False
+            
+            MDBoxLayout:
+                orientation: "vertical"
+                adaptive_height: True
+                padding: "20dp"
+                spacing: "10dp"
+
+                # SEÇÃO 1: Agendados
+                MDLabel:
+                    text: "Consultas Confirmadas"
+                    font_style: "Title"
+                    role: "medium"
+                    theme_text_color: "Primary"
+                    adaptive_height: True
+                    padding: 0, 10, 0, 10
+
+                MDList:
+                    id: lista_agendados
+                    spacing: "8dp"
+                    adaptive_height: True
+                    md_bg_color: hex("#FFF3E0") # Fundo levemente laranja para destacar
+                    radius: [10]
+                    padding: "5dp"
+
+                # Separador
+                MDDivider:
+                    size_hint_y: None
+                    height: "20dp"
+                    color: 0,0,0,0 # Invisível, só para espaço
+
+                # SEÇÃO 2: Livres
+                MDLabel:
+                    text: "Horários Disponíveis (Livres)"
+                    font_style: "Title"
+                    role: "medium"
+                    theme_text_color: "Secondary"
+                    adaptive_height: True
+
+                MDList:
+                    id: lista_livres
+                    spacing: "8dp"
+                    adaptive_height: True
+
+        # Botão Flutuante (+)
+        MDFabButton:
+            icon: "plus"
+            style: "standard"
+            theme_bg_color: "Custom"
+            md_bg_color: hex("#92C7A3")
+            theme_icon_color: "Custom"
+            icon_color: 1, 1, 1, 1
+            pos_hint: {"right": .95, "bottom": .05}
+            on_release: root.adicionar_horario_dialog()
+
+# ... existing code ...
+
+# --- NOVA TELA: RELATÓRIO ---
+<RelatorioPacienteScreen>:
+    name: "relatorio_paciente"
+    
+    MDFloatLayout:
+        md_bg_color: hex("#F5F7F6")
+
+        # Cabeçalho
+        MDBoxLayout:
+            orientation: "horizontal"
+            adaptive_height: True
+            padding: "16dp"
+            spacing: "12dp"
+            pos_hint: {"top": 1}
+            md_bg_color: hex("#92C7A3")
+            radius: [0, 0, 0, 20]
+            elevation: 2
+            
+            MDIconButton:
+                icon: "arrow-left"
+                theme_icon_color: "Custom"
+                icon_color: 1, 1, 1, 1
+                pos_hint: {"center_y": .5}
+                # Volta para a lista de pacientes
+                on_release: app.root.current = "pacientes"
+
+            MDLabel:
+                id: titulo_header
+                text: "Relatório Clínico"
+                font_style: "Title"
+                role: "large"
+                theme_text_color: "Custom"
+                text_color: 1, 1, 1, 1
+                pos_hint: {"center_y": .5}
+            
+            MDButton:
+                style: "text"
+                size_hint_x: .4
+                height: "48dp"
+                on_release: root.view_patient_details_powerBI()
+                MDButtonText:
+                    text: "Relatório Power BI"
+                    theme_text_color: "Custom"
+                    text_color: 1, 1, 1, 1
+
+        # Conteúdo Rolável
+        MDScrollView:
+            pos_hint: {"top": .88}
+            do_scroll_x: False
+            
+            MDBoxLayout:
+                orientation: "vertical"
+                adaptive_height: True
+                padding: "20dp"
+                spacing: "20dp"
+
+                # Card de Resumo (Texto)
+                MDCard:
+                    style: "elevated"
+                    orientation: "vertical"
+                    padding: "16dp"
+                    size_hint_y: None
+                    height: "120dp" # Altura fixa ou adaptive
+                    radius: [15]
+                    md_bg_color: 1, 1, 1, 1
+                    
+                    MDLabel:
+                        text: "Resumo da Análise"
+                        font_style: "Title"
+                        role: "small"
+                        theme_text_color: "Primary"
+                        adaptive_height: True
+                        
+                    MDLabel:
+                        id: lbl_resumo
+                        text: "Carregando dados..."
+                        font_style: "Body"
+                        role: "medium"
+                        theme_text_color: "Secondary"
+                        adaptive_height: True
+
+                # Gráfico 1: Evolução
+                MDCard:
+                    orientation: "vertical"
+                    size_hint_y: None
+                    height: "250dp"
+                    radius: [15]
+                    padding: "10dp"
+                    md_bg_color: 1, 1, 1, 1
+                    elevation: 1
+
+                    Image:
+                        id: img_evolucao
+                        source: "" 
+                        allow_stretch: True
+                        keep_ratio: True
+
+                # Gráfico 2: Distribuição
+                MDCard:
+                    orientation: "vertical"
+                    size_hint_y: None
+                    height: "250dp"
+                    radius: [15]
+                    padding: "10dp"
+                    md_bg_color: 1, 1, 1, 1
+                    elevation: 1
+
+                    Image:
+                        id: img_distribuicao
+                        source: ""
+                        allow_stretch: True
+                        keep_ratio: True
+
+                # --- NOVO: Gráfico 3 (Atividades) ---
+                MDCard:
+                    orientation: "vertical"
+                    size_hint_y: None
+                    height: "420dp" # Altura boa para caber tudo
+                    radius: [20]
+                    padding: "20dp"
+                    spacing: "10dp"
+                    # Cor de fundo levemente bege/cinza igual da imagem
+                    md_bg_color: hex("#EBEBEB") 
+                    elevation: 0 # Remove sombra para ficar "flat" como na imagem
+                    
+                    # Título Principal
+                    MDLabel:
+                        text: "Frequência de Atividades"
+                        halign: "center"
+                        font_style: "Title"
+                        role: "medium"
+                        adaptive_height: True
+                        theme_text_color: "Custom"
+                        text_color: 0.3, 0.3, 0.3, 1
+                    
+                    # Subtítulo
+                    MDLabel:
+                        text: "O que o paciente mais tem feito"
+                        halign: "center"
+                        font_style: "Body"
+                        role: "medium"
+                        adaptive_height: True
+                        theme_text_color: "Custom"
+                        text_color: 0.4, 0.4, 0.4, 1
+
+                    # Linha Divisória Fina
+                    MDDivider:
+                        color: 0.7, 0.7, 0.7, 0.5
+                        size_hint_x: 0.8
+                        pos_hint: {"center_x": .5}
+                        padding_y: "10dp"
+
+                    # Imagem do Gráfico
+                    # Como o gráfico vem transparente da API, ele assume a cor do Card (#EBEBEB)
+                    Image:
+                        id: img_atividades
+                        source: ""
+                        allow_stretch: True
+                        keep_ratio: True
+
+                Widget:
+                    size_hint_y: None
+                    height: "100dp"
