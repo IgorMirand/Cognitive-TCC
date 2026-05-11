@@ -20,9 +20,9 @@ from kivymd.uix.textfield import (
     MDTextFieldHintText,
 )
 from kivymd.uix.list import (
-    MDListItem, 
-    MDListItemLeadingIcon, 
-    MDListItemHeadlineText, 
+    MDListItem,
+    MDListItemLeadingIcon,
+    MDListItemHeadlineText,
     MDListItemSupportingText
 )
 from kivymd.uix.button import MDButton, MDButtonText, MDIconButton
@@ -30,10 +30,11 @@ from kivymd.uix.progressindicator import MDCircularProgressIndicator
 from kivymd.uix.label import MDLabel
 from kivy.properties import StringProperty
 
+
 class PsychoHomeScreen(MDScreen):
-    dialog = None 
-    loading_dialog = None 
-    email_dialog = None 
+    dialog = None
+    loading_dialog = None
+    email_dialog = None
 
     def on_enter(self, *args):
         """Chamado sempre que a tela é exibida."""
@@ -49,7 +50,7 @@ class PsychoHomeScreen(MDScreen):
                 self.ids.id_label.text = f"Bem-vindo(a), {username}"
             else:
                 self.ids.id_label.text = "Bem-vindo(a), Doutor(a)"
-            
+
         except Exception as e:
             print(f"Erro ao carregar dados do psicólogo: {e}")
             self.ids.id_label.text = "Bem-vindo"
@@ -58,7 +59,7 @@ class PsychoHomeScreen(MDScreen):
         """Inicia thread para atualizar cards."""
         # Define textos de "carregando..." na propriedade 'subtitle' dos cards
         self.ids.patient_summary_card.subtitle = "Contando pacientes..."
-        
+
         try:
             psicologo_id = self.manager.app.logged_user_id
             threading.Thread(
@@ -72,10 +73,10 @@ class PsychoHomeScreen(MDScreen):
     def _thread_load_dashboard(self, psicologo_id):
         try:
             db = self.manager.app.db
-            
+
             # 1. Busca contagem
             success_count, count = db.get_patient_count(psicologo_id)
-            print(f"[DEBUG] Success: {success_count}, Count: {count}") # <--- DEBUG
+            print(f"[DEBUG] Success: {success_count}, Count: {count}")  # <--- DEBUG
 
             # 2. Busca próxima consulta
             success_appt, next_appt = db.get_next_appointment(psicologo_id)
@@ -104,10 +105,10 @@ class PsychoHomeScreen(MDScreen):
                     data_ui['appt_text'] = f"{data_formatada} - {paciente_nome}"
                 except Exception as e:
                     data_ui['appt_text'] = f"{data_iso} - {paciente_nome}"
-            
+
             # Atualiza a UI
             Clock.schedule_once(lambda dt: self._update_dashboard_ui(data_ui))
-            
+
         except Exception as e:
             print(f"Erro na thread dashboard: {e}")
 
@@ -151,11 +152,11 @@ class PsychoHomeScreen(MDScreen):
         if not paciente_email or "@" not in paciente_email:
             self.show_ok_dialog("Erro", "E-mail inválido.")
             return
-        
+
         psicologo_id = self.manager.app.logged_user_id
         self.close_dialog()
         self.show_loading_dialog("Enviando...")
-        
+
         # Roda em thread para não travar a tela
         threading.Thread(target=self._processar_envio, args=(psicologo_id, paciente_email)).start()
 
@@ -163,14 +164,13 @@ class PsychoHomeScreen(MDScreen):
         db = self.manager.app.db
         # Chama a Cognitive-Front-API
         success, msg = db.enviar_convite(uid, email)
-        
+
         # Volta para a UI
         Clock.schedule_once(lambda dt: self._pos_envio(msg))
 
     def _pos_envio(self, msg):
         self.dismiss_loading_dialog()
         self.show_ok_dialog("Aviso", msg)
-
 
     def show_add_activity_dialog(self):
         # Campo de texto para o nome da atividade
@@ -213,7 +213,7 @@ class PsychoHomeScreen(MDScreen):
 
     def salvar_nova_atividade(self, *args):
         texto_atividade = self.activity_input.text.strip()
-        
+
         if not texto_atividade:
             self.show_ok_dialog("Erro", "O nome da atividade não pode ser vazio.")
             return
@@ -223,7 +223,7 @@ class PsychoHomeScreen(MDScreen):
             # Chama a função do banco (veja o passo 3 abaixo)
             success, msg = db.adicionar_atividade_template(texto_atividade)
 
-            self.close_add_dialog() # Fecha o diálogo de input
+            self.close_add_dialog()  # Fecha o diálogo de input
 
             if success:
                 self.show_ok_dialog("Sucesso", f"Atividade '{texto_atividade}' criada!")
@@ -248,8 +248,8 @@ class PsychoHomeScreen(MDScreen):
         if self.dialog: self.dialog.dismiss()
         btn = MDButton(MDButtonText(text="OK"), style="text", on_release=self.close_dialog)
         self.dialog = MDDialog(
-            MDDialogHeadlineText(text=title), 
-            MDDialogSupportingText(text=message), 
+            MDDialogHeadlineText(text=title),
+            MDDialogSupportingText(text=message),
             MDDialogButtonContainer(btn)
         )
         self.dialog.open()
@@ -266,7 +266,7 @@ class PatientListScreen(MDScreen):
     def load_patients(self, *args):
         list_widget = self.ids.patient_list_container
         list_widget.clear_widgets()
-        
+
         try:
             db = self.manager.app.db
             psicologo_id = self.manager.app.logged_user_id
@@ -275,8 +275,8 @@ class PatientListScreen(MDScreen):
             if not pacientes:
                 # Cria um label simples se não tiver pacientes
                 lbl = MDLabel(
-                    text="Nenhum paciente vinculado.", 
-                    halign="center", 
+                    text="Nenhum paciente vinculado.",
+                    halign="center",
                     theme_text_color="Secondary"
                 )
                 list_widget.add_widget(lbl)
@@ -289,21 +289,21 @@ class PatientListScreen(MDScreen):
                     MDListItemLeadingIcon(
                         icon="account-circle",
                         theme_icon_color="Custom",
-                        icon_color=[0.57, 0.78, 0.64, 1] # Verde do tema
+                        icon_color=[0.57, 0.78, 0.64, 1]  # Verde do tema
                     ),
                     MDListItemHeadlineText(text=nome_paciente),
                     MDListItemSupportingText(text=f"ID: {paciente_id}"),
-                    
+
                     # Propriedades visuais seguras
                     # radius=[15], # Comente se der erro de lista/float
                     theme_bg_color="Custom",
-                    md_bg_color=[1, 1, 1, 1], # Branco
-                    ripple_effect=True, # Efeito de clique
-                    
+                    md_bg_color=[1, 1, 1, 1],  # Branco
+                    ripple_effect=True,  # Efeito de clique
+
                     # Evento de clique (Lambda correto)
                     on_release=lambda x, pid=paciente_id, pname=nome_paciente: self.view_patient_details(pid, pname)
                 )
-                
+
                 list_widget.add_widget(item)
 
         except Exception as e:
@@ -315,14 +315,15 @@ class PatientListScreen(MDScreen):
         Ao clicar no paciente, salva o ID na App e vai para a tela de relatório.
         """
         print(f"Abrindo relatório para: {nome_paciente}")
-        
+
         # 1. Salva o ID no app para a outra tela usar
         # Criamos variáveis novas no app para não misturar com o diário
         self.manager.app.paciente_em_analise_id = paciente_id
         self.manager.app.paciente_em_analise_nome = nome_paciente
-        
+
         # 2. Navega para a tela de relatório (que criamos abaixo)
         self.manager.current = "relatorio_paciente"
+
 
 class RelatorioPacienteScreen(MDScreen):
     def on_enter(self):
@@ -331,7 +332,7 @@ class RelatorioPacienteScreen(MDScreen):
             paciente_id = self.manager.app.paciente_em_analise_id
             nome = getattr(self.manager.app, 'paciente_em_analise_nome', 'Paciente')
             self.ids.titulo_header.text = f"Relatório: {nome}"
-            
+
             self.limpar_tela()
             self.carregar_dados(paciente_id)
 
@@ -347,37 +348,23 @@ class RelatorioPacienteScreen(MDScreen):
 
     def _fetch_data_thread(self, pid):
         try:
-            import requests
-            
-            # --- CORREÇÃO FINAL DA CONEXÃO ---
-            # Aqui é o pulo do gato: Em vez de tentar adivinhar a URL, 
-            # pegamos EXATAMENTE a mesma URL que o arquivo 'neon.py' está usando.
-            # Se neon.py estiver localhost, usa localhost. Se estiver Render, usa Render.
-            
-            base_url = "https://api-tcc-cognitive.vercel.app/"  #"http://127.0.0.1:8000" # Fallback
-            
-            if hasattr(self.manager.app, 'db') and hasattr(self.manager.app.db, 'base_url'):
-                 base_url = self.manager.app.db.base_url
-            if not base_url.endswith('/'): base_url += '/'
-            
-            # 1. Busca Análise Principal (Texto + Gráficos Antigos)
-            url_analise = f"{base_url}relatorios/analise/{pid}"
-            resp_analise = requests.get(url_analise)
-            data_analise = resp_analise.json() if resp_analise.status_code == 200 else {}
+            db = self.manager.app.db
 
-            # 2. Busca Gráfico de Atividades (NOVO)
-            url_atividades = f"{base_url}relatorios/grafico_atividades/{pid}"
-            resp_ativ = requests.get(url_atividades)
-            data_ativ = resp_ativ.json() if resp_ativ.status_code == 200 else {}
+            # 1. Busca Análise Principal — usa db._get() que já envia API Key + JWT
+            success, data_analise = db.get_relatorio_paciente(pid)
+            if not success:
+                raise Exception("Erro ao buscar relatório do servidor.")
 
-            # Junta tudo num dicionário só para atualizar a tela
+            # 2. Busca Gráfico de Atividades — idem
+            base64_ativ = db.get_grafico_atividades(pid)
+
             dados_finais = {
-                **data_analise, 
-                'grafico_atividades': data_ativ.get('base64')
+                **data_analise,
+                'grafico_atividades': base64_ativ
             }
-            
+
             Clock.schedule_once(lambda dt: self._update_ui(dados_finais))
-                
+
         except Exception as e:
             err_msg = str(e)
             Clock.schedule_once(lambda dt: self._show_error(err_msg))
@@ -389,7 +376,7 @@ class RelatorioPacienteScreen(MDScreen):
         # 2. Atualiza Gráficos Antigos
         if data.get('grafico_evolucao_base64'):
             self.aplicar_grafico(self.ids.img_evolucao, data['grafico_evolucao_base64'])
-            
+
         if data.get('grafico_distribuicao_base64'):
             self.aplicar_grafico(self.ids.img_distribuicao, data['grafico_distribuicao_base64'])
 
@@ -408,30 +395,30 @@ class RelatorioPacienteScreen(MDScreen):
             # Decodifica string Base64 para binário
             data = base64.b64decode(base64_string)
             data_io = BytesIO(data)
-            
+
             # Cria textura Kivy
             im = CoreImage(data_io, ext='png')
-            
+
             # Aplica no widget
             image_widget.texture = im.texture
         except Exception as e:
             print(f"Erro ao renderizar imagem: {e}")
-            
+
     def view_patient_details_powerBI(self):
         # Busca o link na nuvem
         db = self.manager.app.db
-        link = db.get_powerbi_url() 
+        link = db.get_powerbi_url()
         if link:
             webbrowser.open(link)
+
 
 # Classe customizada para o item da lista (suporta eventos de editar/excluir)
 class ActivityListItem(MDListItem):
     text = StringProperty()
-    
+
     def on_edit(self):
         # Chama a função de editar na tela pai
         self.parent_screen.show_edit_dialog(self.atividade_id, self.text)
-
 
     def on_delete(self):
         # Chama a função de excluir na tela pai
@@ -440,6 +427,7 @@ class ActivityListItem(MDListItem):
 
 class ListAtividadeScreen(MDScreen):
     dialog = None
+
     def on_enter(self):
         self.carregar_atividades()
 
@@ -448,7 +436,7 @@ class ListAtividadeScreen(MDScreen):
         list_widget.clear_widgets()
         db = self.manager.app.db
         success, atividades = db.get_atividades_template()
-        
+
         if success and atividades:
             for ativ_id, nome in atividades:
                 item = ActivityListItem()
@@ -485,10 +473,10 @@ class ListAtividadeScreen(MDScreen):
             text=texto_atual,
             mode="outlined"
         )
-        
+
         # Usando lambda para passar o ID para a função de salvar
         save_callback = lambda x: self.salvar_edicao(ativ_id)
-        
+
         self.dialog = MDDialog(
             MDDialogHeadlineText(text="Editar Atividade"),
             MDDialogContentContainer(self.edit_input),
@@ -506,24 +494,25 @@ class ListAtividadeScreen(MDScreen):
             # --- CÓDIGO REAL ---
             db = self.manager.app.db
             success, msg = db.update_atividade_template(ativ_id, novo_texto)
-            
+
             if success:
-                self.carregar_atividades() # Atualiza a lista na tela
+                self.carregar_atividades()  # Atualiza a lista na tela
             else:
-                print(msg) # (Opcional) Mostre um pop-up de erro aqui se quiser
-                
+                print(msg)  # (Opcional) Mostre um pop-up de erro aqui se quiser
+
         self.close_dialog()
 
     # --- EXCLUIR ---
     def show_delete_confirmation(self, ativ_id, nome_ativ):
         delete_callback = lambda x: self.confirmar_exclusao(ativ_id)
-        
+
         self.dialog = MDDialog(
             MDDialogHeadlineText(text="Excluir Atividade?"),
             MDDialogSupportingText(text=f"Tem certeza que deseja remover '{nome_ativ}'?"),
             MDDialogButtonContainer(
                 MDButton(MDButtonText(text="Não"), style="text", on_release=self.close_dialog),
-                MDButton(MDButtonText(text="Sim, Excluir"), style="text", theme_text_color="Error", on_release=delete_callback),
+                MDButton(MDButtonText(text="Sim, Excluir"), style="text", theme_text_color="Error",
+                         on_release=delete_callback),
                 spacing="8dp"
             )
         )
@@ -533,19 +522,20 @@ class ListAtividadeScreen(MDScreen):
         # --- CÓDIGO REAL ---
         db = self.manager.app.db
         success, msg = db.delete_atividade_template(ativ_id)
-        
+
         if success:
-            self.carregar_atividades() # Remove o item da tela
+            self.carregar_atividades()  # Remove o item da tela
         else:
             # Mostra erro se tentar apagar algo que já foi usado
             # Recomendo criar um dialog simples aqui, mas o print serve para teste
-            print(f"Erro: {msg}") 
-            
+            print(f"Erro: {msg}")
+
         self.close_dialog()
 
     def close_dialog(self, *args):
         if self.dialog:
             self.dialog.dismiss()
+
 
 class DisponibilidadeScreen(MDScreen):
     def on_enter(self):
@@ -555,13 +545,13 @@ class DisponibilidadeScreen(MDScreen):
         # Limpa as duas listas
         container_agendados = self.ids.lista_agendados
         container_livres = self.ids.lista_livres
-        
+
         container_agendados.clear_widgets()
         container_livres.clear_widgets()
-        
+
         db = self.manager.app.db
         psicologo_id = self.manager.app.logged_user_id
-        
+
         # Busca tudo do banco
         todos_horarios = db.get_agenda_psicologo(psicologo_id)
 
@@ -576,13 +566,16 @@ class DisponibilidadeScreen(MDScreen):
 
         # --- PREENCHE AGENDADOS ---
         if not lista_agendados:
-            container_agendados.add_widget(MDLabel(text="Nenhuma consulta marcada.", theme_text_color="Secondary", font_style="Label", role="medium"))
-        
+            container_agendados.add_widget(
+                MDLabel(text="Nenhuma consulta marcada.", theme_text_color="Secondary", font_style="Label",
+                        role="medium"))
+
         for ag_id, data_hora_texto, pac_id in lista_agendados:
             data_fmt, hora_fmt = self._formatar_data(data_hora_texto)
-            
+
             item = MDListItem(
-                MDListItemLeadingIcon(icon="calendar-check", theme_icon_color="Custom", icon_color=[0, 0.5, 0, 1]), # Ícone verde check
+                MDListItemLeadingIcon(icon="calendar-check", theme_icon_color="Custom", icon_color=[0, 0.5, 0, 1]),
+                # Ícone verde check
                 MDListItemHeadlineText(text=f"{data_fmt} às {hora_fmt}"),
                 MDListItemSupportingText(text=f"Paciente ID: {pac_id}", theme_text_color="Error"),
                 theme_bg_color="Custom",
@@ -604,7 +597,7 @@ class DisponibilidadeScreen(MDScreen):
         # --- PREENCHE LIVRES ---
         for ag_id, data_hora_texto, pac_id in lista_livres:
             data_fmt, hora_fmt = self._formatar_data(data_hora_texto)
-            
+
             item = MDListItem(
                 MDListItemLeadingIcon(icon="clock-outline"),
                 MDListItemHeadlineText(text=f"{data_fmt} às {hora_fmt}"),
@@ -618,7 +611,7 @@ class DisponibilidadeScreen(MDScreen):
                 icon="trash-can-outline",
                 style="standard",
                 theme_icon_color="Custom",
-                icon_color=[0.5, 0.5, 0.5, 1], # Cinza para horários livres
+                icon_color=[0.5, 0.5, 0.5, 1],  # Cinza para horários livres
                 pos_hint={"center_y": .5},
                 on_release=lambda x, i=ag_id: self.excluir_horario(i)
             )
@@ -634,13 +627,13 @@ class DisponibilidadeScreen(MDScreen):
                 dt_obj = datetime.strptime(data_texto, "%Y-%m-%d %H:%M:%S")
             except:
                 return data_texto, ""
-        
+
         return dt_obj.strftime("%d/%m/%Y"), dt_obj.strftime("%H:%M")
 
     def adicionar_horario_dialog(self):
         self.data_input = MDTextField(MDTextFieldHintText(text="Data (DD/MM/AAAA)"), mode="outlined")
         self.hora_input = MDTextField(MDTextFieldHintText(text="Hora (HH:MM)"), mode="outlined")
-        
+
         self.dialog = MDDialog(
             MDDialogHeadlineText(text="Novo Horário"),
             MDDialogContentContainer(self.data_input, self.hora_input, orientation="vertical", spacing="10dp"),
@@ -656,7 +649,7 @@ class DisponibilidadeScreen(MDScreen):
             dt_obj = datetime.strptime(f"{self.data_input.text} {self.hora_input.text}", "%d/%m/%Y %H:%M")
             db = self.manager.app.db
             psicologo_id = self.manager.app.logged_user_id
-            
+
             if db.adicionar_disponibilidade(psicologo_id, dt_obj):
                 self.carregar_agenda()
                 self.dialog.dismiss()

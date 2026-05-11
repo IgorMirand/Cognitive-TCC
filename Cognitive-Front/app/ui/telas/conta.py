@@ -80,7 +80,7 @@ class ContaScreen(BaseScreen):
         dt_nasc = None
         
         try:
-            # Tentativa 1: Formato Brasileiro (O mais provável vindo do neon.py)
+            # Tentativa 1: Formato Brasileiro (O mais provável vindo do database.py)
             dt_nasc = datetime.strptime(data_nasc_str, "%d/%m/%Y")
         except ValueError:
             try:

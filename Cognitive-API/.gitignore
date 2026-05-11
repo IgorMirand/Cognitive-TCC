@@ -4,8 +4,8 @@ __pycache__/
 *.pyd
 
 # Ambientes virtuais
-# O nome da pasta pode variar (ex: venv, .venv, etc.)
-venv/
+# O nome da pasta pode variar (ex: .venv, ..venv, etc.)
+.venv/
 .venv/
 
 # Arquivos de configurações de IDEs

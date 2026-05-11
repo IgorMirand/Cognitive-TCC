@@ -3,7 +3,7 @@ import sys
 from kivy.core.window import Window
 from kivy.lang import Builder
 from kivymd.app import MDApp
-from app.core.neon import Database
+from app.core.database import Database
 from app.ui.manager import ScreenController
 from dotenv import load_dotenv
 from kivy.resources import resource_add_path 
