@@ -6,8 +6,8 @@ from datetime import datetime
 #  CONFIGURAÇÃO — altere apenas estas duas constantes
 # =============================================================================
 
-BASE_URL = "http://127.0.0.1:8000"   # sem barra no final
-API_KEY  = "5f6e26674bec1706638e228159f2abecc9fe978001efa082b2d4975e3602d026"               # mesmo valor do .env da API
+BASE_URL = "https://cognitive-tcc.vercel.app/"   # sem barra no final
+API_KEY  = ""               # mesmo valor do .env da API
 
 
 # =============================================================================
