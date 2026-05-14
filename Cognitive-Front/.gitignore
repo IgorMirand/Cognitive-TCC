@@ -3,8 +3,6 @@ __pycache__/
 *.pyc
 *.pyd
 
-Cognitive.spec
-
 # Ambientes virtuais
 venv/
 .venv/
@@ -23,7 +21,8 @@ build/
 
 # Arquivos de dados confidenciais ou de ambiente
 .env
-sendgrid.env 
+sendgrid.env
+cognitive.spec
 
 # Bibliotecas locais (pesadas)
 KivyMD/
