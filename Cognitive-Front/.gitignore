@@ -3,6 +3,8 @@ __pycache__/
 *.pyc
 *.pyd
 
+Cognitive.spec
+
 # Ambientes virtuais
 venv/
 .venv/

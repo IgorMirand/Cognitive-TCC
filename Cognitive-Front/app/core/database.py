@@ -1,14 +1,15 @@
 import requests
 from datetime import datetime
-
+from dotenv import load_dotenv
+import os
 
 # =============================================================================
 #  CONFIGURAÇÃO — altere apenas estas duas constantes
 # =============================================================================
 
 BASE_URL = "https://cognitive-tcc.vercel.app/"   # sem barra no final
-API_KEY  = ""               # mesmo valor do .env da API
-
+load_dotenv()
+API_KEY = os.getenv("API_KEY", "")
 
 # =============================================================================
 #  Database
