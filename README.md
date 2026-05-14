@@ -166,7 +166,7 @@ API_KEY=sua_chave_aqui
 
 ## 🎮 Credenciais de Demonstração
 
-> O banco contém dados gerados aleatoriamente para fins de demonstração. Não há dados reais ou sensíveis.
+> O banco contém dados gerados aleatoriamente para fins de demonstração. As respostas não são reais ou sensíveis, pois foram preenchidas por uma IA.
 
 | Perfil | Email | Senha |
 |---|---|---|
