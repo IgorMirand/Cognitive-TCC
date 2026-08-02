@@ -245,7 +245,9 @@ Cognitive-Front/
 ## 👨‍💻 Autores
 
 **Igor Miranda Moura**
+
 **Raiel Ferreira Araujo**
+
 **Igor Nunes Araujo**
 
 TCC — Ciência da Computação — UDF — 2025
