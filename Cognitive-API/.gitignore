@@ -6,7 +6,7 @@ __pycache__/
 # Ambientes virtuais
 # O nome da pasta pode variar (ex: .venv, ..venv, etc.)
 .venv/
-.venv/
+venv/
 
 # Arquivos de configurações de IDEs
 # Ignora arquivos de IDEs como VS Code, PyCharm, etc.

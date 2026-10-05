@@ -7,7 +7,6 @@ from app.models.psicologo_models import VinculoData, ConviteEmail, AtividadeTemp
 
 router = APIRouter(tags=["Psicólogo"])
 
-
 # --- Vínculo e Códigos ---
 
 @router.post("/codigos/gerar/{psicologo_id}")

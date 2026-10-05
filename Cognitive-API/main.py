@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Depends
 from fastapi.responses import HTMLResponse
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.routes import (
     auth_routes,
@@ -12,6 +13,18 @@ from app.api.routes import (
 from app.core.security import verify_api_key
 
 app = FastAPI(title="Cognitive-Front API")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://localhost:3000",
+        "https://cognitive-tcc.vercel.app",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # verify_api_key é aplicado em cada router individualmente.
 # A rota "/" e "/docs" ficam livres propositalmente (são só informativas).

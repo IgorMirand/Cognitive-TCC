@@ -7,9 +7,7 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from app.core.config import settings
 
-# ---------------------------------------------------------------------------
 # Senha
-# ---------------------------------------------------------------------------
 
 def hash_password(password: str) -> str:
     return bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
@@ -18,10 +16,7 @@ def hash_password(password: str) -> str:
 def verify_password(password: str, hashed: str) -> bool:
     return bcrypt.checkpw(password.encode(), hashed.encode())
 
-
-# ---------------------------------------------------------------------------
 # API Key global — protege TODAS as rotas contra acesso externo não autorizado
-# ---------------------------------------------------------------------------
 
 def verify_api_key(x_api_key: str = Header(...)):
     """
@@ -34,9 +29,7 @@ def verify_api_key(x_api_key: str = Header(...)):
         raise HTTPException(status_code=403, detail="API Key inválida ou ausente.")
 
 
-# ---------------------------------------------------------------------------
 # JWT — identifica o usuário logado nas rotas sensíveis
-# ---------------------------------------------------------------------------
 
 _bearer = HTTPBearer()
 

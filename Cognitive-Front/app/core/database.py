@@ -9,7 +9,7 @@ import os
 
 BASE_URL = "https://cognitive-tcc.vercel.app/"   # sem barra no final
 load_dotenv()
-API_KEY = os.getenv("API_KEY", "")
+API_KEY = os.getenv("API_KEY") or "e8cd477a6291839fd38574fd71ab6e6e2fe2774331ea4d90dc9aaa21b9aeff37"
 
 # =============================================================================
 #  Database
