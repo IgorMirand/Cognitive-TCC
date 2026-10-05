@@ -13,6 +13,16 @@ A plataforma tem **dois clientes** que consomem a mesma API:
 - **Desktop** (Kivy/KivyMD): aplicativo original.
 - **Web** (React + Vite): versão em navegador, em desenvolvimento.
 
+### 🌐 Demo online
+
+| Serviço | URL |
+|---|---|
+| Aplicação web | https://cognitive-tcc-ld6g.vercel.app |
+| API | https://cognitive-tcc.vercel.app |
+| Documentação da API (Swagger) | https://cognitive-tcc.vercel.app/docs |
+
+As credenciais de demonstração estão na seção [Credenciais de Demonstração](#-credenciais-de-demonstração).
+
 ### Funcionalidades principais
 
 **Paciente**
@@ -61,7 +71,7 @@ Projeto-TCC/
 - **API Key global:** as rotas exigem o header `X-Api-Key`
 - **JWT por usuário:** o login retorna um token Bearer; rotas sensíveis validam o tipo de usuário (Psicólogo / Paciente)
 
-> ⚠️ No cliente web, variáveis `VITE_*` são embutidas no bundle e ficam visíveis no navegador. Por isso a API Key **não é um segredo** nesse cliente; a proteção real vem do JWT e das validações de autorização no backend.
+> 🔐 No cliente web, a API Key **não vai para o navegador**. O front chama `/api/...` no próprio domínio, e uma função serverless da Vercel (`api/proxy.js`) repassa a requisição para a API adicionando o `X-Api-Key` no servidor. A chave fica apenas nas variáveis de ambiente da Vercel.
 
 ---
 
@@ -75,7 +85,7 @@ Projeto-TCC/
 | Banco de dados | PostgreSQL (Neon, serverless) |
 | Autenticação | JWT (PyJWT) + API Key |
 | Gráficos | Matplotlib, Pandas |
-| Deploy da API | Vercel |
+| Deploy | Vercel (API e web) |
 | Hash de senha | bcrypt |
 
 ---
@@ -145,7 +155,7 @@ cp .env.example .env
 npm run dev
 ```
 
-O app abre em `http://localhost:5173`.
+O app abre em `http://localhost:5173`. Em desenvolvimento, o `vite.config.js` faz o papel do proxy: encaminha `/api/*` para a `API_URL` e injeta o `X-Api-Key`.
 
 Outros comandos: `npm run build` (build de produção) e `npm run preview` (servir o build).
 
@@ -180,11 +190,31 @@ API_KEY=sua_chave_aqui
 ### cognitive-web: `.env`
 
 ```env
-VITE_API_URL=http://127.0.0.1:8000
-VITE_API_KEY=sua_chave_aqui
+# Sem prefixo VITE_: são lidas só pelo servidor (proxy), nunca vão para o navegador
+API_URL=http://127.0.0.1:8000
+API_KEY=sua_chave_aqui
 ```
 
 Em todos os casos, a chave deve ser igual ao `API_KEY` configurado na API.
+
+---
+
+## ☁️ Deploy (Vercel)
+
+O repositório é um monorepo, então a API e o cliente web são **dois projetos separados** na Vercel, cada um apontando para a sua pasta (*Root Directory*).
+
+| Projeto | Root Directory | Variáveis de ambiente |
+|---|---|---|
+| API (`cognitive-tcc`) | `Cognitive-API` | `NEON_DB_URL`, `API_KEY`, `JWT_SECRET`, `GMAIL_USER`, `GMAIL_PASS`, `CORS_ORIGINS` |
+| Web (`cognitive-tcc-ld6g`) | `cognitive-web` | `API_URL`, `API_KEY` |
+
+Pontos de atenção:
+
+- `API_KEY` deve ter **o mesmo valor** nos dois projetos.
+- `API_URL` é a URL da API **sem barra no final** (`https://cognitive-tcc.vercel.app`).
+- Variáveis só valem para deploys novos: depois de alterá-las, faça **Redeploy**.
+- O `vercel.json` do web encaminha `/api/*` para `api/proxy.js` e devolve o `index.html` para as demais rotas (necessário para o React Router).
+- `requirements.txt` precisa estar em **UTF-8**; arquivos gerados com `>` no PowerShell saem em UTF-16 e quebram o build da Vercel.
 
 ---
 
@@ -248,10 +278,13 @@ Cognitive-Front/
 cognitive-web/
 ├── index.html
 ├── package.json
-├── vite.config.js
+├── vite.config.js                 ← Proxy /api em desenvolvimento
+├── vercel.json                    ← Rewrites (SPA + proxy)
 ├── .env.example
+├── api/
+│   └── proxy.js                   ← Função serverless: adiciona X-Api-Key e repassa à API
 └── src/
-    ├── api/api.js                 ← Cliente HTTP central (API Key + JWT)
+    ├── api/api.js                 ← Cliente HTTP central (chama /api + JWT)
     ├── context/AuthContext.jsx    ← Sessão do usuário
     ├── components/                ← Sidebars e componentes compartilhados
     └── pages/
