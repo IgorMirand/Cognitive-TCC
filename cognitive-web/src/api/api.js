@@ -1,15 +1,11 @@
-// ─── Configuração central da API ────────────────────────────────────────────
-const BASE_URL = import.meta.env.API
-const API_KEY  = import.meta.env.API_KEY
+const BASE_URL = "/api"
 
-// Token JWT fica no localStorage após o login
 const getToken = () => localStorage.getItem("token")
 
-// ─── Headers automáticos (API Key + JWT se existir) ─────────────────────────
+// ─── Headers automáticos (JWT se existir) ───────────────────────────────────
 function headers(extra = {}) {
   const h = {
     "Content-Type": "application/json",
-    "X-Api-Key": API_KEY,
     ...extra,
   }
   const token = getToken()
@@ -17,11 +13,25 @@ function headers(extra = {}) {
   return h
 }
 
+// ─── Tratamento de resposta ──────────────────────────────────────────────────
+// Se a resposta de erro não for JSON (ex.: HTML de um 404/405), evita estourar
+// "Unexpected token <" e devolve um objeto { detail } padronizado.
+async function handle(res) {
+  if (res.ok) return res.json()
+
+  let erro
+  try {
+    erro = await res.json()
+  } catch {
+    erro = { detail: `Erro ${res.status}` }
+  }
+  throw erro
+}
+
 // ─── Helpers HTTP ────────────────────────────────────────────────────────────
 async function get(path) {
   const res = await fetch(`${BASE_URL}${path}`, { headers: headers() })
-  if (!res.ok) throw await res.json()
-  return res.json()
+  return handle(res)
 }
 
 async function post(path, body) {
@@ -30,8 +40,7 @@ async function post(path, body) {
     headers: headers(),
     body: JSON.stringify(body),
   })
-  if (!res.ok) throw await res.json()
-  return res.json()
+  return handle(res)
 }
 
 async function put(path, body) {
@@ -40,8 +49,7 @@ async function put(path, body) {
     headers: headers(),
     body: JSON.stringify(body),
   })
-  if (!res.ok) throw await res.json()
-  return res.json()
+  return handle(res)
 }
 
 async function del(path) {
@@ -49,8 +57,7 @@ async function del(path) {
     method: "DELETE",
     headers: headers(),
   })
-  if (!res.ok) throw await res.json()
-  return res.json()
+  return handle(res)
 }
 
 // ─── Auth ────────────────────────────────────────────────────────────────────
@@ -76,32 +83,32 @@ export const agendaAPI = {
 
 // ─── Diário ──────────────────────────────────────────────────────────────────
 export const diarioAPI = {
-  salvar:    (data)      => post("/diario", data),
+  salvar:    (data)       => post("/diario", data),
   historico: (pacienteId) => get(`/diario/historico/${pacienteId}`),
 }
 
 // ─── Psicólogo ───────────────────────────────────────────────────────────────
 export const psicologoAPI = {
-  stats:              (id)         => get(`/psicologo/${id}/stats`),
-  pacientes:          (id)         => get(`/psicologo/${id}/pacientes`),
-  getPsicologoDoPaciente: (id)     => get(`/paciente/${id}/psicologo`),
-  gerarCodigo:        (id)         => post(`/codigos/gerar/${id}`),
-  vincular:           (data)       => post("/vincular", data),
-  validarCodigoMaster:(codigo)     => get(`/codigos/master/validar/${codigo}`),
-  usarCodigoMaster:   (data)       => post("/codigos/master/usar", data),
-  listarAtividades:   ()           => get("/atividades"),
-  criarAtividade:     (data)       => post("/atividades", data),
-  deletarAtividade:   (id)         => del(`/atividades/${id}`),
-  getAnotacoes:       (psiId, pacId) => get(`/consultas/${psiId}/${pacId}`),
-  salvarConsulta:     (data)       => post("/consultas", data),
-  enviarConvite:      (data)       => post("/email/enviar_convite", data),
+  stats:                  (id)           => get(`/psicologo/${id}/stats`),
+  pacientes:              (id)           => get(`/psicologo/${id}/pacientes`),
+  getPsicologoDoPaciente: (id)           => get(`/paciente/${id}/psicologo`),
+  gerarCodigo:            (id)           => post(`/codigos/gerar/${id}`),
+  vincular:               (data)         => post("/vincular", data),
+  validarCodigoMaster:    (codigo)       => get(`/codigos/master/validar/${codigo}`),
+  usarCodigoMaster:       (data)         => post("/codigos/master/usar", data),
+  listarAtividades:       ()             => get("/atividades"),
+  criarAtividade:         (data)         => post("/atividades", data),
+  deletarAtividade:       (id)           => del(`/atividades/${id}`),
+  getAnotacoes:           (psiId, pacId) => get(`/consultas/${psiId}/${pacId}`),
+  salvarConsulta:         (data)         => post("/consultas", data),
+  enviarConvite:          (data)         => post("/email/enviar_convite", data),
 }
 
 // ─── Notificações ────────────────────────────────────────────────────────────
 export const notificacoesAPI = {
-  get:          (userId) => get(`/notificacoes/${userId}`),
-  deletar:      (id)     => del(`/notificacoes/${id}`),
-  marcarLidas:  (userId) => put(`/notificacoes/marcar_lida/${userId}`),
+  get:         (userId) => get(`/notificacoes/${userId}`),
+  deletar:     (id)     => del(`/notificacoes/${id}`),
+  marcarLidas: (userId) => put(`/notificacoes/marcar_lida/${userId}`),
 }
 
 // ─── Analytics ───────────────────────────────────────────────────────────────
