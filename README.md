@@ -121,8 +121,6 @@ cp .env.example .env
 uvicorn main:app --reload
 ```
 
-- API local: `http://127.0.0.1:8000`
-- Swagger local: `http://127.0.0.1:8000/docs`
 - API em produção: `https://cognitive-tcc.vercel.app`
 
 ### 3. Cliente desktop (Kivy)
@@ -182,7 +180,7 @@ GMAIL_PASS=senha_de_app
 ### Cognitive-Front (desktop): `.env`
 
 ```env
-API_URL=http://127.0.0.1:8000
+API_URL=https://cognitive-tcc.vercel.app
 API_KEY=sua_chave_aqui
 ```
 
@@ -190,7 +188,7 @@ API_KEY=sua_chave_aqui
 
 ```env
 # Sem prefixo VITE_: são lidas só pelo servidor (proxy), nunca vão para o navegador
-API_URL=http://127.0.0.1:8000
+API_URL=https://cognitive-tcc.vercel.app
 API_KEY=sua_chave_aqui
 ```
 
