@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Depends
 from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
+import os
 
 from app.api.routes import (
     auth_routes,
@@ -14,13 +15,16 @@ from app.core.security import verify_api_key
 
 app = FastAPI(title="Cognitive-Front API")
 
+_origins = [
+    "http://localhost:5173",
+    "http://localhost:3000",
+]
+_extra = os.getenv("CORS_ORIGINS", "")
+_origins += [o.strip() for o in _extra.split(",") if o.strip()]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "http://localhost:3000",
-        "https://cognitive-tcc.vercel.app",
-    ],
+    allow_origins=_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

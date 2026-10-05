@@ -1,6 +1,6 @@
 // ─── Configuração central da API ────────────────────────────────────────────
-const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000"
-const API_KEY  = import.meta.env.VITE_API_KEY  || "0548275fce0d5c62e5612b4da43b712d1138afa4d5c9e02e4ab9692968cd8f7b"
+const BASE_URL = import.meta.env.API
+const API_KEY  = import.meta.env.API_KEY
 
 // Token JWT fica no localStorage após o login
 const getToken = () => localStorage.getItem("token")
