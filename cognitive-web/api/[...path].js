@@ -4,8 +4,11 @@
 
 module.exports = async function handler(req, res) {
   const base = (process.env.API_URL || "").replace(/\/+$/, "")
-  if (!base || !process.env.API_KEY) {
-    return res.status(500).json({ detail: "Proxy sem API_URL/API_KEY configuradas." })
+  const faltando = []
+  if (!base) faltando.push("API_URL")
+  if (!process.env.API_KEY) faltando.push("API_KEY")
+  if (faltando.length) {
+    return res.status(500).json({ detail: `Proxy sem variáveis: ${faltando.join(", ")}` })
   }
 
   // req.query traz "path" (segmentos da rota) + os parâmetros de query reais
