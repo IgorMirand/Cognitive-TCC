@@ -1,0 +1,57 @@
+.ativ-page {
+  max-width: 960px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ativ-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.ativ-titulo { font-size: 1.6rem; font-weight: 700; color: var(--text-dark); margin-bottom: 4px; }
+.ativ-sub { color: var(--text-light); font-size: 0.9rem; }
+
+.ativ-form textarea { width: 100%; }
+
+.ativ-empty { text-align: center; padding: 48px 24px; color: var(--text-mid); }
+.ativ-empty h3 { color: var(--text-dark); margin: 8px 0; }
+
+.ativ-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.ativ-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px 18px;
+}
+
+.ativ-card-corpo { flex: 1; min-width: 0; }
+.ativ-card-titulo { font-size: 1rem; font-weight: 600; color: var(--text-dark); margin-bottom: 6px; }
+.ativ-card-desc { font-size: 0.85rem; color: var(--text-mid); line-height: 1.45; white-space: pre-wrap; }
+
+.ativ-del {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 4px;
+  border-radius: 6px;
+  opacity: 0.6;
+  transition: opacity 0.15s, background 0.15s;
+}
+.ativ-del:hover:not(:disabled) { opacity: 1; background: #fdecec; }
+.ativ-del:disabled { cursor: default; }
+
+@media (max-width: 768px) {
+  .ativ-grid { grid-template-columns: 1fr; }
+}

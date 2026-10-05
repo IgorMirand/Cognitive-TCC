@@ -1,0 +1,136 @@
+.notif-page { max-width: 680px; }
+
+/* ── Header ── */
+.notif-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.notif-titulo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 4px;
+}
+
+.notif-subtitulo {
+  font-size: 0.875rem;
+  color: var(--green-dark);
+  font-weight: 600;
+}
+
+.notif-acoes {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.notif-acoes .btn {
+  font-size: 0.825rem;
+  padding: 9px 16px;
+}
+
+/* ── Empty ── */
+.notif-empty {
+  text-align: center;
+  padding: 56px 24px;
+}
+
+.notif-empty-icon {
+  font-size: 3rem;
+  margin-bottom: 12px;
+}
+
+.notif-empty h3 {
+  font-size: 1.1rem;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+
+.notif-empty p {
+  color: var(--text-light);
+  font-size: 0.875rem;
+}
+
+/* ── Lista ── */
+.notif-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ── Card ── */
+.notif-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  gap: 12px;
+  transition: box-shadow 0.15s;
+}
+
+.notif-card--nova {
+  border-left: 4px solid var(--green-main);
+  background: var(--green-light);
+}
+
+.notif-card-conteudo {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.notif-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--green-main);
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+
+.notif-textos { flex: 1; min-width: 0; }
+
+.notif-card-titulo {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-dark);
+  margin-bottom: 4px;
+}
+
+.notif-card-msg {
+  font-size: 0.825rem;
+  color: var(--text-mid);
+  line-height: 1.5;
+}
+
+/* ── Botão deletar ── */
+.notif-deletar {
+  background: none;
+  border: none;
+  color: var(--text-light);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  transition: all 0.15s;
+  line-height: 1;
+}
+
+.notif-deletar:hover {
+  background: #fff0f0;
+  color: var(--danger);
+}
+
+/* ── Responsive ── */
+@media (max-width: 500px) {
+  .notif-acoes { width: 100%; }
+  .notif-acoes .btn { flex: 1; justify-content: center; }
+}

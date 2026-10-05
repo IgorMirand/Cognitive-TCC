@@ -1,0 +1,137 @@
+.agenda-page { max-width: 860px; }
+
+.agenda-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.agenda-titulo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 4px;
+}
+
+.agenda-subtitulo { color: var(--text-light); font-size: 0.9rem; }
+
+/* ── Banners ── */
+.agenda-banner {
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.agenda-banner--sucesso {
+  background: var(--green-light);
+  color: var(--green-dark);
+  border: 1px solid var(--green-main);
+}
+
+.agenda-banner--erro {
+  background: #fff0f0;
+  color: var(--danger);
+  border: 1px solid var(--danger);
+}
+
+/* ── Empty ── */
+.agenda-empty {
+  text-align: center;
+  padding: 48px 24px;
+}
+
+.agenda-empty p:first-child { font-size: 2.5rem; margin-bottom: 12px; }
+.agenda-empty h3 { font-size: 1.1rem; color: var(--text-dark); margin-bottom: 8px; }
+.agenda-empty p  { color: var(--text-light); font-size: 0.9rem; }
+
+.agenda-empty-small {
+  padding: 20px;
+  color: var(--text-light);
+  font-size: 0.875rem;
+}
+
+/* ── Grid ── */
+.agenda-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+
+/* ── Seções ── */
+.secao-titulo {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 14px;
+}
+
+/* ── Dia ── */
+.dia-grupo { margin-bottom: 20px; }
+
+.dia-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+  padding-left: 4px;
+}
+
+.slots-lista { display: flex; flex-direction: column; gap: 10px; }
+
+/* ── Slot card ── */
+.slot-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  gap: 12px;
+}
+
+.slot-card--reservado {
+  border-left: 4px solid var(--green-main);
+}
+
+.slot-info { display: flex; align-items: center; gap: 12px; }
+
+.slot-hora {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  min-width: 56px;
+}
+
+.slot-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 12px;
+}
+
+.slot-badge--livre {
+  background: var(--green-light);
+  color: var(--green-dark);
+}
+
+.slot-badge--confirmado {
+  background: #e8f4ff;
+  color: #2563eb;
+}
+
+.slot-btn {
+  padding: 8px 18px;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 680px) {
+  .agenda-grid { grid-template-columns: 1fr; }
+  .slot-hora   { font-size: 1.1rem; }
+}

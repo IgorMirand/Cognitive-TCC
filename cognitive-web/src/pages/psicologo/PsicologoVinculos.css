@@ -1,0 +1,37 @@
+.vinc-page {
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.vinc-titulo { font-size: 1.6rem; font-weight: 700; color: var(--text-dark); margin-bottom: 4px; }
+.vinc-sub { color: var(--text-light); font-size: 0.9rem; }
+
+.vinc-codigo {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-align: center;
+  color: var(--green-dark);
+  background: var(--green-light);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+  user-select: all;
+  word-break: break-all;
+}
+
+.vinc-acoes { display: flex; gap: 10px; flex-wrap: wrap; }
+.vinc-acoes a.btn { text-decoration: none; display: inline-flex; align-items: center; }
+
+.vinc-form { display: flex; gap: 10px; }
+.vinc-form .input { flex: 1; }
+
+.vinc-ok { color: var(--green-dark); font-size: 0.875rem; }
+
+@media (max-width: 768px) {
+  .vinc-form { flex-direction: column; }
+  .vinc-codigo { font-size: 1.5rem; }
+}

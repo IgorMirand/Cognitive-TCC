@@ -1,0 +1,66 @@
+.agenda-page {
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.agenda-titulo { font-size: 1.6rem; font-weight: 700; color: var(--text-dark); margin-bottom: 4px; }
+.agenda-sub { color: var(--text-light); font-size: 0.9rem; }
+
+.agenda-form-row { display: flex; gap: 10px; }
+.agenda-form-row .input { flex: 1; }
+
+.agenda-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--text-mid);
+  cursor: pointer;
+}
+
+.agenda-empty { text-align: center; padding: 48px 24px; color: var(--text-mid); }
+.agenda-empty h3 { color: var(--text-dark); margin: 8px 0; }
+
+.agenda-dia { text-transform: capitalize; }
+
+.agenda-lista { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+.agenda-slot {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  background: var(--green-light);
+}
+
+.agenda-slot--ocupado { background: #eef3fb; }
+
+.agenda-hora {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--green-dark);
+  min-width: 56px;
+}
+.agenda-slot--ocupado .agenda-hora { color: #5b8dd9; }
+
+.agenda-status { flex: 1; font-size: 0.9rem; color: var(--text-dark); }
+
+.agenda-del {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.05rem;
+  padding: 4px;
+  border-radius: 6px;
+  opacity: 0.6;
+  transition: opacity 0.15s, background 0.15s;
+}
+.agenda-del:hover:not(:disabled) { opacity: 1; background: #fdecec; }
+.agenda-del:disabled { cursor: default; }
+
+@media (max-width: 768px) {
+  .agenda-form-row { flex-direction: column; }
+}

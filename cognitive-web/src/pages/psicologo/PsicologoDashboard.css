@@ -1,0 +1,198 @@
+.psi-dashboard { max-width: 960px; }
+
+/* ── Header ── */
+.psi-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 28px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.psi-greeting {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 4px;
+}
+
+.psi-date {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  text-transform: capitalize;
+}
+
+/* ── Stats ── */
+.psi-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.psi-stat-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: transform 0.15s;
+}
+
+.psi-stat-card:hover { transform: translateY(-2px); }
+
+.psi-stat-card--green {
+  background: var(--green-main);
+  color: var(--white);
+}
+
+.psi-stat-card--green .psi-stat-valor,
+.psi-stat-card--green .psi-stat-label { color: var(--white); }
+
+.psi-stat-icon { font-size: 2rem; flex-shrink: 0; }
+.psi-stat-valor { font-size: 1.5rem; font-weight: 700; color: var(--text-dark); }
+.psi-stat-label { font-size: 0.78rem; color: var(--text-light); margin-top: 2px; text-transform: capitalize; }
+
+/* ── Grid ── */
+.psi-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.psi-atalhos { grid-column: 1 / -1; }
+
+/* ── Seção ── */
+.secao-titulo {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 16px;
+}
+
+.secao-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.secao-header .secao-titulo { margin-bottom: 0; }
+
+.link-btn {
+  background: none;
+  border: none;
+  color: var(--green-dark);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+}
+.link-btn:hover { text-decoration: underline; }
+
+/* ── Próxima consulta ── */
+.proxima-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: var(--green-light);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+}
+
+.proxima-hora {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--green-dark);
+  flex-shrink: 0;
+}
+
+.proxima-paciente {
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-dark);
+  margin-bottom: 4px;
+}
+
+.proxima-data {
+  font-size: 0.82rem;
+  color: var(--text-mid);
+}
+
+/* ── Pacientes ── */
+.pacientes-lista { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+.paciente-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.paciente-item:hover { background: var(--green-light); }
+
+.paciente-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--green-main);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.paciente-nome { flex: 1; font-size: 0.9rem; font-weight: 500; color: var(--text-dark); }
+.paciente-arrow { color: var(--text-light); font-size: 0.9rem; }
+
+/* ── Atalhos ── */
+.psi-atalhos-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+}
+
+.psi-atalho-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 8px;
+  border: 1.5px solid #e8e8e0;
+  border-radius: var(--radius);
+  background: var(--white);
+  color: var(--text-dark);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.psi-atalho-btn span:first-child { font-size: 1.5rem; }
+
+.psi-atalho-btn:hover {
+  border-color: var(--green-main);
+  background: var(--green-light);
+  color: var(--green-dark);
+  transform: translateY(-2px);
+}
+
+/* ── Empty ── */
+.psi-empty { text-align: center; padding: 16px 0; color: var(--text-light); font-size: 0.875rem; }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .psi-stats          { grid-template-columns: 1fr; }
+  .psi-grid           { grid-template-columns: 1fr; }
+  .psi-atalhos        { grid-column: auto; }
+  .psi-atalhos-grid   { grid-template-columns: repeat(3, 1fr); }
+  .psi-greeting       { font-size: 1.3rem; }
+}

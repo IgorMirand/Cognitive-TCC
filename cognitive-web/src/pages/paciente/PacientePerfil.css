@@ -1,0 +1,101 @@
+.perfil-page { max-width: 860px; }
+
+.perfil-titulo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 24px;
+}
+
+/* ── Avatar ── */
+.perfil-avatar-section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24px;
+  margin-bottom: 28px;
+}
+
+.perfil-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--green-main);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.perfil-nome {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.perfil-tipo {
+  font-size: 0.85rem;
+  color: var(--green-dark);
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+/* ── Grid ── */
+.perfil-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.perfil-vinculo { grid-column: 1 / -1; }
+
+/* ── Seção ── */
+.secao-titulo {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 20px;
+}
+
+/* ── Sucesso ── */
+.sucesso-msg {
+  color: var(--green-dark);
+  font-size: 0.875rem;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+/* ── Vínculo ── */
+.vinculo-ativo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--green-light);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+.vinculo-icon   { font-size: 1.75rem; flex-shrink: 0; }
+.vinculo-label  { font-weight: 600; color: var(--text-dark); font-size: 0.9rem; }
+.vinculo-sub    { font-size: 0.8rem; color: var(--text-light); margin-top: 2px; }
+.vinculo-info   { font-size: 0.875rem; color: var(--text-mid); line-height: 1.5; }
+
+.codigo-input {
+  letter-spacing: 0.15em;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .perfil-grid    { grid-template-columns: 1fr; }
+  .perfil-vinculo { grid-column: auto; }
+}

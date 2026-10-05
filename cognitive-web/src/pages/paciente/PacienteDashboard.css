@@ -1,0 +1,181 @@
+.dashboard { max-width: 960px; }
+
+/* ── Header ── */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 28px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.dashboard-greeting {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 4px;
+}
+
+.dashboard-date {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  text-transform: capitalize;
+}
+
+/* ── Stats ── */
+.dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.stat-icon { font-size: 2rem; }
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--text-light);
+  margin-top: 2px;
+}
+
+/* ── Grid ── */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.dashboard-diario { grid-column: 1 / -1; }
+
+/* ── Section headers ── */
+.section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 16px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.section-header .section-title { margin-bottom: 0; }
+
+.link-btn {
+  background: none;
+  border: none;
+  color: var(--green-dark);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+}
+.link-btn:hover { text-decoration: underline; }
+
+/* ── Consulta ── */
+.consulta-info { text-align: center; padding: 8px 0; }
+
+.consulta-data {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  text-transform: capitalize;
+  margin-bottom: 4px;
+}
+
+.consulta-hora {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--green-main);
+}
+
+/* ── Notificações ── */
+.notif-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+.notif-item {
+  border-left: 3px solid var(--green-main);
+  padding: 8px 12px;
+  background: var(--green-light);
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+.notif-titulo { font-weight: 600; font-size: 0.875rem; color: var(--text-dark); }
+.notif-msg    { font-size: 0.8rem; color: var(--text-mid); margin-top: 2px; }
+
+/* ── Diário ── */
+.diario-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+
+.diario-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px;
+  border-radius: var(--radius);
+  background: var(--bg);
+}
+
+.diario-emoji  { font-size: 1.75rem; flex-shrink: 0; }
+.diario-emocao { font-weight: 600; font-size: 0.9rem; color: var(--text-dark); }
+.diario-data   { font-size: 0.78rem; color: var(--text-light); margin-top: 2px; }
+.diario-nota   { font-size: 0.82rem; color: var(--text-mid); margin-left: auto; max-width: 280px; }
+
+/* ── Atalhos ── */
+.atalhos-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.atalho-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border: 1.5px solid #e8e8e0;
+  border-radius: var(--radius);
+  background: var(--white);
+  color: var(--text-dark);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.atalho-btn:hover {
+  border-color: var(--green-main);
+  background: var(--green-light);
+  color: var(--green-dark);
+}
+
+/* ── Empty ── */
+.empty-state { text-align: center; padding: 16px 0; }
+.empty-state p { color: var(--text-light); font-size: 0.9rem; margin-bottom: 12px; }
+.empty-text { color: var(--text-light); font-size: 0.875rem; }
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .dashboard-stats { grid-template-columns: 1fr; }
+  .dashboard-grid  { grid-template-columns: 1fr; }
+  .dashboard-diario { grid-column: auto; }
+  .dashboard-greeting { font-size: 1.3rem; }
+  .diario-nota { display: none; }
+}

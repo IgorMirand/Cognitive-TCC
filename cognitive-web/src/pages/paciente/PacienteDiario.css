@@ -1,0 +1,206 @@
+.diario-page {
+  max-width: 760px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* ── Formulário ── */
+.diario-titulo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 4px;
+}
+
+.diario-subtitulo {
+  color: var(--text-light);
+  font-size: 0.9rem;
+  text-transform: capitalize;
+  margin-bottom: 24px;
+}
+
+/* ── Emoções ── */
+.emocoes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.emocao-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 8px;
+  border: 2px solid #e8e8e0;
+  border-radius: var(--radius);
+  background: var(--white);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.emocao-btn:hover {
+  border-color: var(--green-main);
+  background: var(--green-light);
+  transform: translateY(-2px);
+}
+
+.emocao-btn--active {
+  border-color: var(--green-main);
+  background: var(--green-light);
+  box-shadow: 0 0 0 3px rgba(146, 199, 163, 0.3);
+}
+
+.emocao-emoji { font-size: 1.75rem; }
+.emocao-label { font-size: 0.72rem; color: var(--text-mid); font-weight: 500; text-align: center; }
+
+/* ── Bem-estar ── */
+.bem-estar-section { margin-bottom: 24px; }
+
+.bem-estar-label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-mid);
+  margin-bottom: 10px;
+}
+
+.bem-estar-slider {
+  width: 100%;
+  accent-color: var(--green-main);
+  height: 6px;
+  cursor: pointer;
+}
+
+.bem-estar-ticks {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: var(--text-light);
+  margin-top: 6px;
+}
+
+/* ── Atividades ── */
+.atividades-section { margin-bottom: 4px; }
+
+.atividades-titulo {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-mid);
+  margin-bottom: 10px;
+}
+
+.atividades-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.atividade-chip {
+  padding: 7px 14px;
+  border: 1.5px solid #e0e0d8;
+  border-radius: 20px;
+  background: var(--white);
+  font-size: 0.82rem;
+  color: var(--text-mid);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.atividade-chip:hover { border-color: var(--green-main); color: var(--green-dark); }
+
+.atividade-chip--active {
+  background: var(--green-main);
+  border-color: var(--green-main);
+  color: var(--white);
+  font-weight: 600;
+}
+
+/* ── Textarea ── */
+.diario-textarea { resize: vertical; min-height: 100px; }
+
+/* ── Sucesso ── */
+.sucesso-banner {
+  background: var(--green-light);
+  color: var(--green-dark);
+  border: 1px solid var(--green-main);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-top: 8px;
+}
+
+/* ── Histórico ── */
+.historico-titulo {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 16px;
+}
+
+.historico-list { display: flex; flex-direction: column; gap: 14px; }
+
+.historico-card { padding: 18px 20px; }
+
+.historico-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.historico-emocao { display: flex; align-items: center; gap: 12px; }
+.historico-emoji  { font-size: 2rem; }
+
+.historico-emocao-label {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-dark);
+}
+
+.historico-data {
+  font-size: 0.78rem;
+  color: var(--text-light);
+  margin-top: 2px;
+  text-transform: capitalize;
+}
+
+.historico-nota {
+  text-align: center;
+  background: var(--green-light);
+  border-radius: 10px;
+  padding: 8px 14px;
+  flex-shrink: 0;
+}
+
+.nota-valor { font-size: 1.4rem; font-weight: 700; color: var(--green-dark); }
+.nota-max   { font-size: 0.8rem; color: var(--text-light); }
+
+.historico-anotacao {
+  font-size: 0.875rem;
+  color: var(--text-mid);
+  font-style: italic;
+  border-left: 3px solid var(--green-main);
+  padding-left: 12px;
+  margin-bottom: 10px;
+}
+
+.historico-atividades { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+
+.atividade-tag {
+  background: var(--bg);
+  color: var(--text-mid);
+  font-size: 0.78rem;
+  padding: 4px 10px;
+  border-radius: 12px;
+  border: 1px solid #e0e0d8;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .emocoes-grid { grid-template-columns: repeat(4, 1fr); }
+  .historico-anotacao { display: none; }
+}

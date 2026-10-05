@@ -1,0 +1,182 @@
+/* ── Lista de pacientes ── */
+.pacientes-page { max-width: 960px; }
+
+.pacientes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.pacientes-titulo {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 4px;
+}
+
+.pacientes-sub { color: var(--text-light); font-size: 0.9rem; }
+
+.pacientes-empty {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--text-mid);
+}
+.pacientes-empty h3 { color: var(--text-dark); margin: 8px 0; }
+
+.busca-wrapper { position: relative; margin-bottom: 20px; }
+.busca-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.busca-input { padding-left: 40px; width: 100%; }
+
+.pacientes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.paciente-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.paciente-card:hover { transform: translateY(-2px); }
+
+.paciente-card-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--green-main);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.paciente-card-info { flex: 1; min-width: 0; }
+.paciente-card-nome {
+  font-weight: 600;
+  color: var(--text-dark);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.paciente-card-sub { font-size: 0.78rem; color: var(--text-light); margin-top: 2px; }
+.paciente-card-arrow { color: var(--text-light); }
+
+/* ── Detalhe do paciente ── */
+.detalhe-page { max-width: 820px; }
+
+.voltar-btn {
+  background: none;
+  border: none;
+  color: var(--green-dark);
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 16px;
+}
+.voltar-btn:hover { text-decoration: underline; }
+
+.detalhe-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.detalhe-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--green-main);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.detalhe-nome { font-size: 1.5rem; font-weight: 700; color: var(--text-dark); }
+.detalhe-sub { color: var(--text-light); font-size: 0.85rem; }
+
+/* ── Abas ── */
+.abas {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1.5px solid #e8e8e0;
+  margin-bottom: 20px;
+}
+
+.aba-btn {
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  padding: 10px 16px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-mid);
+  cursor: pointer;
+  margin-bottom: -1.5px;
+  transition: color 0.15s, border-color 0.15s;
+}
+.aba-btn:hover { color: var(--green-dark); }
+.aba-btn--active {
+  color: var(--green-dark);
+  border-bottom-color: var(--green-main);
+  font-weight: 600;
+}
+
+.empty-text { color: var(--text-light); font-size: 0.9rem; text-align: center; }
+
+/* ── Relatório ── */
+.relatorio-section,
+.anotacoes-section { display: flex; flex-direction: column; gap: 16px; }
+
+.resumo-card { background: var(--green-light); }
+.resumo-texto { color: var(--text-dark); line-height: 1.5; }
+
+.grafico-titulo {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 12px;
+}
+.grafico-img { width: 100%; height: auto; border-radius: var(--radius); display: block; }
+
+/* ── Anotações ── */
+.nova-anotacao textarea { width: 100%; }
+
+.anotacoes-lista { display: flex; flex-direction: column; gap: 12px; }
+
+.anotacao-data {
+  font-size: 0.78rem;
+  color: var(--text-light);
+  margin-bottom: 6px;
+  text-transform: capitalize;
+}
+.anotacao-texto {
+  color: var(--text-dark);
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 768px) {
+  .pacientes-grid { grid-template-columns: 1fr; }
+  .detalhe-nome { font-size: 1.25rem; }
+}

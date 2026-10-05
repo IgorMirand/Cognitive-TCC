@@ -1,0 +1,12 @@
+.psi-layout { display: flex; min-height: 100vh; }
+
+.psi-main {
+  flex: 1;
+  margin-left: 240px;
+  padding: 32px;
+  min-height: 100vh;
+}
+
+@media (max-width: 768px) {
+  .psi-main { margin-left: 0; margin-top: 64px; padding: 20px 16px; }
+}
