@@ -224,8 +224,6 @@ Pontos de atenção:
 | Psicólogo | `renata@gmail.com` | `123` |
 | Paciente | `maria@gmail.com` | `123` |
 
-A API Key da demonstração é fornecida à banca avaliadora separadamente e **não** é publicada neste repositório.
-
 ---
 
 ## 📁 Estrutura do Projeto
