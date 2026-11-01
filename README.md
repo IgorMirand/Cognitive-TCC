@@ -17,7 +17,7 @@ A plataforma tem **dois clientes** que consomem a mesma API:
 
 | Serviço | URL |
 |---|---|
-| Aplicação web | https://cognitive-tcc-ld6g.vercel.app |
+| Aplicação web | https://cognitivetcc.vercel.app |
 |  Documentação da API| https://cognitive-tcc.vercel.app |
 
 As credenciais de demonstração estão na seção [Credenciais de Demonstração](#-credenciais-de-demonstração).
